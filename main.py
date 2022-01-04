@@ -12,7 +12,6 @@ from model import Net
 path_to_training_data = 'Dataset/train/'
 path_to_validation_data = 'Dataset/validation/'
 
-
 training_ds = CustomDataset(path_to_training_data)
 validation_ds = CustomDataset(path_to_validation_data)
 
