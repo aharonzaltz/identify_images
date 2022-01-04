@@ -9,12 +9,10 @@ import glob
 class CustomDataset(Dataset):
     def __init__(self, path, n_classes=10, transform=False, isFullPath=False):
         self.transform = transform
-        if(isFullPath == False):
+        if not isFullPath:
             path = path + '/*.png'
-        print (path)
 
         self.filelist = glob.glob(path)
-        # print (self.filelist)
         self.labels = np.zeros(len(self.filelist))  # load the labels (copy from the notebook)
 
         for class_i in range(10):
