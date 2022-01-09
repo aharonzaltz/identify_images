@@ -1,8 +1,7 @@
 
 import torch.nn as nn
-
-import torch.optim as optim
 import torch
+
 
 loss_func = nn.CrossEntropyLoss()
 
@@ -46,3 +45,6 @@ def compute_accuracy_item(item, net):
             pred = torch.argmax(pred, dim=1)
             answer = pred
     return answer
+
+
+

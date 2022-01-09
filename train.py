@@ -1,6 +1,7 @@
 
 import matplotlib
 
+from data_loader_config import training_dataloader, valid_dataloader
 from test_items import loss_func, compute_accuracy_and_loss
 
 matplotlib.use('TkAgg')
@@ -8,11 +9,12 @@ import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 
-from main import training_dataloader, valid_dataloader
+from config import net_file_name, path_to_training_data, path_to_validation_data, batch_size
 from model import Net
-import torch.nn as nn
 import torch
 import torch.optim as optim
+
+print ("Start")
 
 net = Net()
 n_epochs = 50
@@ -34,6 +36,7 @@ for epoch in pbar:
 
     net.train()  # put the net into "training mode"
     for x, y in training_dataloader:
+
         if torch.cuda.is_available():
             x = x.cuda()
             y = y.cuda()
@@ -62,7 +65,7 @@ for epoch in pbar:
 
     # save the model if the validation loss has decreased
     if len(validation_loss_vs_epoch) == 1 or validation_loss_vs_epoch[-2] > validation_loss_vs_epoch[-1]:
-        torch.save(net.state_dict(), 'trained_model.pt')
+        torch.save(net.state_dict(), net_file_name + '.pt')
 
 fig, ax = plt.subplots(1, 2, figsize=(8, 3))
 
