@@ -3,7 +3,7 @@ import glob
 import torch
 from torch.utils.data import Dataset, DataLoader
 
-from config import path_to_training_data, training_dataloader, path_to_validation_data, net_file_name
+from config import path_to_training_data, path_to_validation_data, net_file_name, batch_size
 from dataloader import CustomDataset
 import matplotlib
 
@@ -29,7 +29,7 @@ for path in filelist:
     indexOfClassNum = [index for index, x in enumerate(path) if x.isdigit()][0]
     classNum = int(path[indexOfClassNum])
     item = CustomDataset(path, 10, False, True)
-    image_item = DataLoader(item, batch_size=1, shuffle=True)
+    image_item = DataLoader(item, batch_size=batch_size, shuffle=True)
     answer = compute_accuracy_item(image_item, net)[0].item()
     print (answer, classNum, answer == classNum)
     if answer == classNum:
