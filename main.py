@@ -28,7 +28,7 @@ correctAnswers = 0
 for path in filelist:
     indexOfClassNum = [index for index, x in enumerate(path) if x.isdigit()][0]
     classNum = int(path[indexOfClassNum])
-    item = CustomDataset(path, 10, False, True)
+    item = CustomDataset(path, False, True)
     image_item = DataLoader(item, batch_size=batch_size, shuffle=True)
     answer = compute_accuracy_item(image_item, net)[0].item()
     print (answer, classNum, answer == classNum)

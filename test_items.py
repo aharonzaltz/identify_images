@@ -8,7 +8,6 @@ loss_func = nn.CrossEntropyLoss()
 def compute_accuracy_and_loss(dataloader, net):
     total = 0
     correct = 0
-
     loss = 0
 
     if torch.cuda.is_available():
@@ -17,19 +16,19 @@ def compute_accuracy_and_loss(dataloader, net):
 
     n_batches = 0
     with torch.no_grad():
-        for x, y in dataloader:
+        for input, correct_answer in dataloader:
             n_batches += 1
 
             if torch.cuda.is_available():
-                x = x.cuda()
-                y = y.cuda()
-            pred = net(x)
+                input = input.cuda()
+                correct_answer = correct_answer.cuda()
+            pred = net(input)
 
-            loss += loss_func(pred, y).item()
+            loss += loss_func(pred, correct_answer).item()
 
             pred = torch.argmax(pred, dim=1)
-            correct += len(torch.where(pred == y)[0])
-            total += len(y)
+            correct += len(torch.where(pred == correct_answer)[0])
+            total += len(correct_answer)
     loss = loss / n_batches
     return float(correct) / total, loss
 
