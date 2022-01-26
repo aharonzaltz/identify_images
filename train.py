@@ -24,27 +24,27 @@ validation_loss_vs_cycle = []
 training_acc_vs_cycle = []
 validation_acc_vs_cycle = []
 
-pbar = tqdm(range(training_cycles))
+cycles = tqdm(range(training_cycles))
 optimizer = optim.Adam(net.parameters(), lr=0.001)
 
-for epoch in pbar:
+for cycle in cycles:
 
     if len(validation_loss_vs_cycle) > 1:
-        pbar.set_description('val acc:' + '{0:.5f}'.format(validation_acc_vs_cycle[-1]) +
+        cycles.set_description('val acc:' + '{0:.5f}'.format(validation_acc_vs_cycle[-1]) +
                              ', train acc:' + '{0:.5f}'.format(training_acc_vs_cycle[-1]))
 
     net.train()  # put the net into "training mode"
-    for input, correct_answer in training_dataloader:
+    for _input, correct_answer in training_dataloader:
 
         if torch.cuda.is_available():
-            input = input.cuda()
+            _input = _input.cuda()
             correct_answer = correct_answer.cuda()
 
             # add the basic training loop here
 
         optimizer.zero_grad()
 
-        output = net(input)
+        output = net(_input)
         loss = loss_func(output, correct_answer)
 
         loss.backward()

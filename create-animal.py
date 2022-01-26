@@ -26,8 +26,6 @@ for i in range(2):
         adapter = HTTPAdapter(max_retries=retry)
         session.mount('http://', adapter)
         session.mount('https://', adapter)
-
-
         response = session.get(url)
         # response = requests.get(url)
 

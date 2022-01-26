@@ -1,7 +1,7 @@
 from captcha.image import ImageCaptcha
 
 # Create an image instance of the given size
-image = ImageCaptcha(width=70, height=70)
+image = ImageCaptcha(width=69, height=69)
 
 # Image captcha text
 

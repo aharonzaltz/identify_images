@@ -16,18 +16,18 @@ def compute_accuracy_and_loss(dataloader, net):
 
     n_batches = 0
     with torch.no_grad():
-        for input, correct_answer in dataloader:
+        for _input, correct_answer in dataloader:
             n_batches += 1
 
             if torch.cuda.is_available():
-                input = input.cuda()
+                _input = _input.cuda()
                 correct_answer = correct_answer.cuda()
-            pred = net(input)
+            answer = net(_input)
 
-            loss += loss_func(pred, correct_answer).item()
+            loss += loss_func(answer, correct_answer).item()
 
-            pred = torch.argmax(pred, dim=1)
-            correct += len(torch.where(pred == correct_answer)[0])
+            answer = torch.argmax(answer, dim=1)
+            correct += len(torch.where(answer == correct_answer)[0])
             total += len(correct_answer)
     loss = loss / n_batches
     return float(correct) / total, loss
@@ -40,10 +40,6 @@ def compute_accuracy_item(item, net):
             if torch.cuda.is_available():
                 x = x.cuda()
                 y = y.cuda()
-            pred = net(x)
-            pred = torch.argmax(pred, dim=1)
-            answer = pred
+            answer = net(x)
+            answer = torch.argmax(answer, dim=1)
     return answer
-
-
-
